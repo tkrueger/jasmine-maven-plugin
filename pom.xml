@@ -41,7 +41,24 @@
     <jasmine.version>1.0.2</jasmine.version>
     <powermock.version>1.4.6</powermock.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <repository.url>http://masterdev/nexus/content/repositories/releases</repository.url>
+    <repository.snapshot.url>http://masterdev/nexus/content/repositories/snapshots</repository.snapshot.url>
   </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>Releases</id>
+      <name>Release Repository</name>
+      <url>${repository.url}</url>
+    </repository>
+    <snapshotRepository>
+      <id>Snapshots</id>
+      <name>Snapshot Snapshot Repository</name>
+      <url>${repository.snapshot.url}</url>
+      <uniqueVersion>true</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
 
   <dependencies>
     <!-- Mojo Dependencies -->
