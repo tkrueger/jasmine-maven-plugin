@@ -8,10 +8,11 @@ import java.util.List;
 
 public class ProjectDirScripResolver extends AbstractScriptResolver {
 
-  public ProjectDirScripResolver(File projectBaseDir, ScriptSearch sources, ScriptSearch specs, List<String> preloads) throws IOException {
+  public ProjectDirScripResolver(File projectBaseDir, ScriptSearch sources, ScriptSearch specs, List<String> preloads, ScriptSearch css) throws IOException {
     this.preloads = preloads;
     this.scriptSearchSpecs = specs;
     this.scriptSearchSources = sources;
     this.baseDir = projectBaseDir;
+    this.scriptSearchCss = css;
   }
 }

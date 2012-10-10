@@ -23,13 +23,14 @@ import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.IsCollectionContaining.hasItem;
 
 public class ProjectDirScripResolverIntegrationTest {
-  private String[] excludes = new String[]{"vendor/vendor.js"};
+  private final String[] excludes = new String[]{"vendor/vendor.js"};
 
   @Rule
   public TemporaryFolder tempFolder = new TemporaryFolder();
   private File root;
   private File sourceFolder;
   private File testFolder;
+  private File cssFolder;
   private ProjectDirScripResolver projectDirScripResolver;
 
   @Before
@@ -39,7 +40,7 @@ public class ProjectDirScripResolverIntegrationTest {
     createFile(root, "src/main/webapp/js/lib", "dep.js");
     createFile(root, "src/main/webapp/js/vendor", "vendor.js");
     testFolder = createFile(root, "src/test/javascript", "spec.js").getParentFile();
-
+    cssFolder = createFile(root, "src/main/webapp/css", "css.css").getParentFile();
     initScriptResolver();
 
   }
@@ -48,7 +49,8 @@ public class ProjectDirScripResolverIntegrationTest {
     projectDirScripResolver = new ProjectDirScripResolver(root,
         new ScriptSearch(sourceFolder, ScansDirectory.DEFAULT_INCLUDES, Arrays.asList(excludes)),
         new ScriptSearch(testFolder, ScansDirectory.DEFAULT_INCLUDES, Collections.<String>emptyList()),
-        null);
+        null,
+        new ScriptSearch(cssFolder, ScansDirectory.DEFAULT_CSS_INCLUDES, Collections.<String>emptyList()));
     projectDirScripResolver.resolveScripts();
   }
 
@@ -89,7 +91,8 @@ public class ProjectDirScripResolverIntegrationTest {
     ProjectDirScripResolver projectDirScripResolver = new ProjectDirScripResolver(root,
         new ScriptSearch(sourceFolder, ScansDirectory.DEFAULT_INCLUDES, Collections.<String>emptyList()),
         new ScriptSearch(testFolder, ScansDirectory.DEFAULT_INCLUDES, Arrays.asList(new String[]{"vendor/vendor.js"})),
-        null);
+        null,
+        new ScriptSearch(sourceFolder, ScansDirectory.DEFAULT_CSS_INCLUDES, Collections.<String>emptyList()));
     projectDirScripResolver.resolveScripts();
     Set<String> preloads = projectDirScripResolver.getPreloads();
     assertThat(preloads, hasItem(endsWith("vendor/vendor.js")));

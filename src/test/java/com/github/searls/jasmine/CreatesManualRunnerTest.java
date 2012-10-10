@@ -35,6 +35,7 @@ public class CreatesManualRunnerTest {
 
   private static final String SOURCE_DIR = "sauces";
   private static final String SPEC_DIR = "specks";
+  private static final String CSS_DIR = "czesses";
   private static final String SOURCE_ENCODING = "UTF-Pandaz";
   private static final String MANUAL_RUNNER_NAME = "Jerry. That's a nice name.";
   private static final List<String> PRELOAD_SOURCES = new ArrayList<String>();
@@ -42,7 +43,7 @@ public class CreatesManualRunnerTest {
 
   private AbstractJasmineMojo config = new AbstractJasmineMojo(){ public void run() throws Exception {}};
 
-  @InjectMocks private CreatesManualRunner subject = new CreatesManualRunner(config);
+  @InjectMocks private final CreatesManualRunner subject = new CreatesManualRunner(config);
 
   @Mock private FileUtilsWrapper fileUtilsWrapper;
   @Mock private DefaultSpecRunnerHtmlGenerator specRunnerHtmlGenerator;
@@ -51,9 +52,11 @@ public class CreatesManualRunnerTest {
 
   @Mock private ScriptSearch sources;
   @Mock private ScriptSearch specs;
+  @Mock private ScriptSearch css;
 
   @Mock private File sourceDirectory;
   @Mock private File specDirectory;
+  @Mock private File cssDirectory;
   @Mock private File runnerDestination;
   @Mock private File jasmineTargetDir;
   @Mock private File customRunnerTemplate;
@@ -74,6 +77,10 @@ public class CreatesManualRunnerTest {
     when(specs.getDirectory()).thenReturn(specDirectory);
     when(specDirectory.getAbsolutePath()).thenReturn(SPEC_DIR);
     when(specDirectory.exists()).thenReturn(true);
+
+    when(css.getDirectory()).thenReturn(cssDirectory);
+    when(cssDirectory.getAbsolutePath()).thenReturn(CSS_DIR);
+    when(cssDirectory.exists()).thenReturn(true);
   }
 
   @Before

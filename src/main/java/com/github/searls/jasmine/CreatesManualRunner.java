@@ -27,9 +27,9 @@ public class CreatesManualRunner {
 
     ProjectDirScripResolver projectDirScripResolver;
     if(null != config.customRunnerConfiguration) {
-                 projectDirScripResolver = new CustomConfigScriptResolver(config.getMavenProject().getBasedir(), config.getSources(), config.getSpecs(), config.getPreloadSources());
+      projectDirScripResolver = new CustomConfigScriptResolver(config.getMavenProject().getBasedir(), config.getSources(), config.getSpecs(), config.getPreloadSources(), config.getCss());
     }   else {
-      projectDirScripResolver = new ProjectDirScripResolver(config.getMavenProject().getBasedir(), config.getSources(), config.getSpecs(), config.getPreloadSources());
+      projectDirScripResolver = new ProjectDirScripResolver(config.getMavenProject().getBasedir(), config.getSources(), config.getSpecs(), config.getPreloadSources(), config.getCss());
     }
     SpecRunnerHtmlGenerator generator = new SpecRunnerHtmlGeneratorFactory().create(ReporterType.HtmlReporter, config, projectDirScripResolver);
 

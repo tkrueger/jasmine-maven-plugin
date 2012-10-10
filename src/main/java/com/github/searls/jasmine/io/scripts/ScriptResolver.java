@@ -16,6 +16,8 @@ public interface ScriptResolver {
 
   Set<String> getAllScripts();
 
+  Set<String> getAllCss();
+
   String getSourceDirectory() throws IOException;
 
   String getSpecDirectoryPath() throws MalformedURLException;
@@ -27,6 +29,8 @@ public interface ScriptResolver {
   Set<String> getPreloadsRelativePath() throws IOException;
 
   Set<String> getAllScriptsRelativePath() throws IOException;
+
+  Set<String> getAllCssRelativePath() throws IOException;
 
   String getSourceDirectoryRelativePath() throws IOException;
 

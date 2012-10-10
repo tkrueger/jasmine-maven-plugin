@@ -145,6 +145,15 @@ public class HtmlGeneratorConfiguration {
   public String getScriptLoaderPath() {
       return scriptLoaderPath;
   }
+
+  public Set<String> getAllCss() {
+    return scriptResolver.getAllCss();
+  }
+
+  public Set<String> getAllCssRelativePath() throws IOException {
+    return scriptResolver.getAllCssRelativePath();
+  }
+
 }
 
 

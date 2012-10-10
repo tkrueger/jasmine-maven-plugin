@@ -28,6 +28,11 @@ public abstract class AbstractJasmineMojo extends AbstractMojo {
   private File jsTestSrcDir;
 
   /**
+   * @parameter default-value="${project.basedir}${file.separator}src${file.separator}main${file.separator}resources" expression="${cssSrcDir}"
+   */
+  File cssSrcDir;
+
+  /**
    * Determines the Selenium WebDriver class we'll use to execute the tests. See the Selenium documentation for more details.
    * The plugin uses HtmlUnit by default.
    *
@@ -167,6 +172,11 @@ public abstract class AbstractJasmineMojo extends AbstractMojo {
   protected String srcDirectoryName;
 
   /**
+   * @parameter default-value="css"
+   */
+  protected String cssDirectoryName;
+
+  /**
    * @parameter default-value="${project.build.sourceEncoding}"
    */
   protected String sourceEncoding;
@@ -174,22 +184,32 @@ public abstract class AbstractJasmineMojo extends AbstractMojo {
   /**
    * @parameter
    */
-  private List<String> sourceIncludes = ScansDirectory.DEFAULT_INCLUDES;
+  private final List<String> sourceIncludes = ScansDirectory.DEFAULT_INCLUDES;
 
   /**
    * @parameter
    */
-  private List<String> sourceExcludes = Collections.emptyList();
+  private final List<String> sourceExcludes = Collections.emptyList();
 
   /**
    * @parameter
    */
-  private List<String> specIncludes = ScansDirectory.DEFAULT_INCLUDES;
+  private final List<String> specIncludes = ScansDirectory.DEFAULT_INCLUDES;
 
   /**
    * @parameter
    */
-  private List<String> specExcludes = Collections.emptyList();
+  private final List<String> specExcludes = Collections.emptyList();
+
+  /**
+   * @parameter
+   */
+  private final List<String> cssIncludes = ScansDirectory.DEFAULT_CSS_INCLUDES;
+
+  /**
+   * @parameter
+   */
+  private final List<String> cssExcludes = Collections.emptyList();
 
   /**
    * @parameter default-value="${project}"
@@ -222,12 +242,14 @@ public abstract class AbstractJasmineMojo extends AbstractMojo {
 
   protected ScriptSearch sources;
   protected ScriptSearch specs;
+  protected ScriptSearch css;
 
   protected StringifiesStackTraces stringifiesStackTraces = new StringifiesStackTraces();
 
   public final void execute() throws MojoExecutionException, MojoFailureException {
     sources = new ScriptSearch(jsSrcDir,sourceIncludes,sourceExcludes);
     specs = new ScriptSearch(jsTestSrcDir,specIncludes,specExcludes);
+    css = new ScriptSearch(cssSrcDir, cssIncludes, cssExcludes);
 
     try {
       run();
@@ -268,6 +290,10 @@ public abstract class AbstractJasmineMojo extends AbstractMojo {
     return specs;
   }
 
+  public ScriptSearch getCss() {
+      return css;
+  }
+
   public String getSpecDirectoryName() {
     return specDirectoryName;
   }
@@ -288,4 +314,9 @@ public abstract class AbstractJasmineMojo extends AbstractMojo {
     public String getScriptLoaderPath() {
         return scriptLoaderPath;
     }
+
+    public String getCssDirectoryName() {
+        return cssDirectoryName;
+    }
+
 }

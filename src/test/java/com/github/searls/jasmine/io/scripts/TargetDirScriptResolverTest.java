@@ -70,8 +70,10 @@ public class TargetDirScriptResolverTest {
     when(config.getPreloadSources()).thenReturn(Arrays.asList(preloads));
     when(config.getSrcDirectoryName()).thenReturn("src");
     when(config.getSpecDirectoryName()).thenReturn("spec");
+    when(config.getCssDirectoryName()).thenReturn("css");
     when(config.getSources()).thenReturn(new ScriptSearch(sourceFolder, ScansDirectory.DEFAULT_INCLUDES, Collections.<String>emptyList()));
     when(config.getSpecs()).thenReturn(new ScriptSearch(testFolder, ScansDirectory.DEFAULT_INCLUDES, Collections.<String>emptyList()));
+    when(config.getCss()).thenReturn(new ScriptSearch(testFolder, ScansDirectory.DEFAULT_CSS_INCLUDES, Collections.<String>emptyList()));
   }
 
   @Test
