@@ -17,9 +17,14 @@ public class ProcessResourcesMojo extends AbstractJasmineMojo {
     "Set configuration property `jsSrcDir` to the directory containing your JavaScript sources. " +
     "Skipping jasmine:resources processing.";
 
-  private DirectoryCopier directoryCopier = new DirectoryCopier();
-  private CompilesAllCoffeeInDirectory compilesAllCoffeeInDirectory = new CompilesAllCoffeeInDirectory();
+  public static final CharSequence MISSING_CSS_DIR_WARNING = "Css source folder was given but not found. " +
+      "Check configuration property `cssSrcDir`.";
 
+  private final DirectoryCopier directoryCopier = new DirectoryCopier();
+  private final CompilesAllCoffeeInDirectory compilesAllCoffeeInDirectory = new CompilesAllCoffeeInDirectory();
+
+
+  @Override
   public void run() throws IOException {
     getLog().info("Processing JavaScript Sources");
     if (sources.getDirectory().exists()) {
@@ -28,6 +33,24 @@ public class ProcessResourcesMojo extends AbstractJasmineMojo {
       compilesAllCoffeeInDirectory.compile(destination);
     } else {
       getLog().warn(MISSING_DIR_WARNING);
+    }
+
+    if (cssDirConfigured()) {
+        copyCssFiles();
+    }
+  }
+
+  private boolean cssDirConfigured() {
+    return cssSrcDir != null;
+  }
+
+  private void copyCssFiles() throws IOException {
+    getLog().info("Processing CSS Sources");
+    if (css.getDirectory().exists()) {
+      File destination = new File(jasmineTargetDir, cssDirectoryName);
+      directoryCopier.copyDirectory(css.getDirectory(), destination);
+    } else {
+      getLog().warn(MISSING_CSS_DIR_WARNING);
     }
   }
 

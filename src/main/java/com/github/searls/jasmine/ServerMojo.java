@@ -25,9 +25,9 @@ public class ServerMojo extends AbstractJasmineMojo {
     "\n\n"+
     "Just leave this process running as you test-drive your code, refreshing your browser window to re-run your specs. You can kill the server with Ctrl-C when you're done.";
 
-  private Server server = new Server();
+  private final Server server = new Server();
 
-  private RelativizesFilePaths relativizesFilePaths = new RelativizesFilePaths();
+  private final RelativizesFilePaths relativizesFilePaths = new RelativizesFilePaths();
 
   @Override
   public void run() throws Exception {

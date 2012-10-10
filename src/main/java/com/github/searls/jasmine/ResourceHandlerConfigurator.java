@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class ResourceHandlerConfigurator {
 
-  private AbstractJasmineMojo configuration;
-  private RelativizesFilePaths relativizesFilePaths;
+  private final AbstractJasmineMojo configuration;
+  private final RelativizesFilePaths relativizesFilePaths;
 
   public ResourceHandlerConfigurator(AbstractJasmineMojo configuration, RelativizesFilePaths relativizesFilePaths) {
     this.configuration = configuration;
@@ -38,6 +38,9 @@ public class ResourceHandlerConfigurator {
 
     ContextHandler specDirContextHandler = contexts.addContext("/" + configuration.specDirectoryName, "");
     specDirContextHandler.setHandler(createResourceHandler(true, configuration.specs.getDirectory().getAbsolutePath(), null));
+
+    ContextHandler cssDirContextHandler = contexts.addContext("/" + configuration.cssDirectoryName, "");
+    cssDirContextHandler.setHandler(createResourceHandler(true, configuration.css.getDirectory().getAbsolutePath(), null));
 
     ContextHandler rootContextHandler = contexts.addContext("/", "");
     rootContextHandler.setHandler(createResourceHandler(false, configuration.mavenProject.getBasedir().getAbsolutePath(), new String[]{manualSpecRunnerPath()}));

@@ -14,6 +14,7 @@ import org.codehaus.plexus.util.DirectoryScanner;
 public class ScansDirectory {
 
   public final static List<String> DEFAULT_INCLUDES = asList("**"+File.separator+"*.js","**"+File.separator+"*.coffee");
+  public final static List<String> DEFAULT_CSS_INCLUDES = asList("**"+File.separator+"*.css");
 
   private DirectoryScanner directoryScanner = new DirectoryScanner();
 

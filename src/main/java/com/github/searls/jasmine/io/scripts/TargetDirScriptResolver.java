@@ -14,7 +14,7 @@ public class TargetDirScriptResolver extends AbstractScriptResolver {
     this.preloads = configuration.getPreloadSources();
     this.scriptSearchSources = searchForDir(new File(this.baseDir, configuration.getSrcDirectoryName()), configuration.getSources());
     this.scriptSearchSpecs = searchForDir(new File(this.baseDir, configuration.getSpecDirectoryName()), configuration.getSpecs());
-
+    this.scriptSearchCss = searchForDir(new File(this.baseDir, configuration.getCssDirectoryName()), configuration.getCss());
     resolveScripts();
   }
 

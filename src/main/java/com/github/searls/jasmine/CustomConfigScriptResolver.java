@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class CustomConfigScriptResolver extends ProjectDirScripResolver {
-  public CustomConfigScriptResolver(File basedir, ScriptSearch sources, ScriptSearch specs, List<String> preloadSources) throws IOException {
-    super(basedir, sources, specs, preloadSources);
+  public CustomConfigScriptResolver(File basedir, ScriptSearch sources, ScriptSearch specs, List<String> preloadSources, ScriptSearch css) throws IOException {
+    super(basedir, sources, specs, preloadSources, css);
   }
 
   @Override

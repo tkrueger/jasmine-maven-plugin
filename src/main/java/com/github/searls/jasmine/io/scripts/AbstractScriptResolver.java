@@ -13,9 +13,11 @@ import java.util.Set;
 public abstract class AbstractScriptResolver implements ScriptResolver {
   private Set<String> sources;
   private Set<String> specs;
+  private Set<String> css;
   protected File baseDir;
   protected ScriptSearch scriptSearchSources;
   protected ScriptSearch scriptSearchSpecs;
+  protected ScriptSearch scriptSearchCss;
   protected List<String> preloads;
   protected RelativizesASetOfScripts relativizer = new RelativizesASetOfScripts();
   protected RelativizesFilePaths relativizesFilePaths = new RelativizesFilePaths();
@@ -27,7 +29,7 @@ public abstract class AbstractScriptResolver implements ScriptResolver {
     setScriptsToPreload(new LinkedHashSet<String>(resolvesLocationOfPreloadSources.resolve(preloads, scriptSearchSources.getDirectory(), scriptSearchSpecs.getDirectory())));
     setSources(new LinkedHashSet<String>(findsScriptLocationsInDirectory.find(scriptSearchSources)));
     setSpecs(new LinkedHashSet<String>(findsScriptLocationsInDirectory.find(scriptSearchSpecs)));
-
+    setCss(new LinkedHashSet<String>(findsScriptLocationsInDirectory.find(scriptSearchCss)));
   }
 
   public Set<String> getPreloads() {
@@ -44,6 +46,10 @@ public abstract class AbstractScriptResolver implements ScriptResolver {
 
   public Set<String> getAllScripts() {
     return addAllScripts(scriptsToPreload, sources, specs);
+  }
+
+  public Set<String> getAllCss() {
+    return this.css;
   }
 
   public String getSourceDirectory() throws IOException {
@@ -68,6 +74,10 @@ public abstract class AbstractScriptResolver implements ScriptResolver {
 
   public Set<String> getAllScriptsRelativePath() throws IOException {
     return addAllScripts(getPreloadsRelativePath(), getSourcesRelativePath(), getSpecsRelativePath());
+  }
+
+  public Set<String> getAllCssRelativePath() throws IOException {
+    return relativizer.relativize(baseDir, css);
   }
 
   public String getSourceDirectoryRelativePath() throws IOException {
@@ -98,5 +108,13 @@ public abstract class AbstractScriptResolver implements ScriptResolver {
 
   public void setSpecs(Set<String> specs) {
     this.specs = specs;
+  }
+
+  public Set<String> getCss() {
+    return css;
+  }
+
+  public void setCss(Set<String> css) {
+    this.css = css;
   }
 }

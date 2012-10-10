@@ -1,5 +1,6 @@
 package com.github.searls.jasmine.runner;
 
+import com.github.searls.jasmine.format.FormatsCssTags;
 import com.github.searls.jasmine.format.FormatsScriptTags;
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
@@ -12,11 +13,13 @@ import java.util.Set;
 public abstract class AbstractSpecRunnerHtmlGenerator {
   private static final String SOURCE_ENCODING = "sourceEncoding";
   private static final String CSS_DEPENDENCIES_TEMPLATE_ATTR_NAME = "cssDependencies";
+  private static final String CSS_STYLES_TEMPLATE_ATTR_NAME = "cssStyles";
   private static final String JAVASCRIPT_DEPENDENCIES_TEMPLATE_ATTR_NAME = "javascriptDependencies";
   protected static final String SOURCES_TEMPLATE_ATTR_NAME = "sources";
   protected static final String REPORTER_ATTR_NAME = "reporter";
-  private HtmlGeneratorConfiguration configuration;
-  private FormatsScriptTags formatsScriptTags = new FormatsScriptTags();
+  private final HtmlGeneratorConfiguration configuration;
+  private final FormatsScriptTags formatsScriptTags = new FormatsScriptTags();
+  private final FormatsCssTags formatsCssTags = new FormatsCssTags();
 
   protected AbstractSpecRunnerHtmlGenerator(HtmlGeneratorConfiguration configuration) {
     this.configuration = configuration;
@@ -42,11 +45,15 @@ public abstract class AbstractSpecRunnerHtmlGenerator {
   }
 
   protected void applyCssToTemplate(List<String> styles, StringTemplate template) throws IOException {
-    StringBuilder css = new StringBuilder();
-    for (String cssFile : styles) {
-      css.append("<style type=\"text/css\">").append(configuration.IOtoString(cssFile)).append("</style>");
-    }
-    template.setAttribute(CSS_DEPENDENCIES_TEMPLATE_ATTR_NAME, css.toString());
+      StringBuilder css = new StringBuilder();
+      for (String cssFile : styles) {
+        css.append("<style type=\"text/css\">").append(configuration.IOtoString(cssFile)).append("</style>");
+      }
+      template.setAttribute(CSS_DEPENDENCIES_TEMPLATE_ATTR_NAME, css.toString());
+  }
+
+  protected void applyCssTagsToTemplate(List<String> cssDependencies, StringTemplate template) throws IOException {
+      template.setAttribute(CSS_STYLES_TEMPLATE_ATTR_NAME, formatsCssTags.format(cssDependencies));
   }
 
   public HtmlGeneratorConfiguration getConfiguration() {

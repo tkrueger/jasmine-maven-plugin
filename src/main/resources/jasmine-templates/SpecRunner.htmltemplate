@@ -4,6 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=$sourceEncoding$">
   <title>Jasmine Spec Runner</title>
   $cssDependencies$
+  $cssStyles$
   $javascriptDependencies$
   $sources$
 </head>
